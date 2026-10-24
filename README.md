@@ -48,15 +48,15 @@ The training data comes from **HaGRID (HAnd Gesture Recognition Image Dataset)**
 - Repository: https://github.com/hukenovs/hagrid
 - Paper: https://arxiv.org/abs/2206.08219
 
-The `data/` folder contains a small sample of the HaGRID annotations. For the full dataset, visit the original repository.
+The `data/` folder contains landmark samples (train.csv, val.csv, test.csv) extracted from HaGRID. For the full dataset, visit the original repository.
 
 ## Installation
 
 MediaPipe supports Python 3.9 - 3.12, so use one of those versions.
 
 ```bash
-git clone https://github.com/Yousef-mousa1/tom-jerry.git
-cd tom-jerry
+git clone https://github.com/Yousef-mousa1/hand-mouse.git
+cd hand-mouse
 python3.12 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
@@ -67,7 +67,6 @@ pip install -r requirements.txt
 Run everything from the project root:
 
 ```bash
-python src/convert.py   # build train.csv / val.csv / test.csv
 python src/record.py    # (optional) record your own samples
 python src/train.py     # train and save models/model.joblib
 python src/mouse.py     # start controlling the mouse
