@@ -1,4 +1,5 @@
 """Hand Mouse
+Run from the project root:  python src/mouse.py
 SPACE = toggle control on/off (starts OFF) | ESC = quit
 
 Gestures (change them via the G_* constants below):

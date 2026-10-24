@@ -1,6 +1,6 @@
 """Draws what each gesture in the HaGRID annotations looks like (two samples per gesture).
-Run:  python view_all.py
-It saves all_gestures.png next to the script. Read the gesture names from the plot titles;
+Run from the project root:  python src/view_all.py
+It saves all_gestures.png inside the outputs/ folder. Read the gesture names from the plot titles;
 they are the same names you put in NAMES inside common.py.
 """
 import glob
@@ -14,7 +14,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-from common import BASE, HERE, normalize
+from common import DATA_DIR, OUTPUT_DIR, normalize
 
 SPLIT = "val"            # val is smaller and faster to load than train
 SAMPLES = 2              # number of samples per gesture
@@ -27,8 +27,9 @@ CONNECTIONS = [(0,1),(1,2),(2,3),(3,4),(0,5),(5,6),(6,7),(7,8),(5,9),(9,10),
 
 
 def find_files(split):
+    pattern = os.path.join(DATA_DIR, "**", split, "*.json")
     files = []
-    for p in glob.glob(f"{BASE}/**/{split}/*.json", recursive=True):
+    for p in glob.glob(pattern, recursive=True):
         if ".ipynb_checkpoints" not in p:
             files.append(p)
     return sorted(files)
@@ -36,7 +37,7 @@ def find_files(split):
 
 files = find_files(SPLIT) or find_files("train")
 if not files:
-    raise SystemExit(f"Could not find any json files inside {BASE}")
+    raise SystemExit(f"Could not find any json files inside {DATA_DIR}")
 
 print(f"Found {len(files)} files:")
 gestures = {}
@@ -87,6 +88,7 @@ for i, name in enumerate(names):
             ax.set_title(name, loc="left", fontsize=11, fontweight="bold")
 
 plt.tight_layout()
-out = os.path.join(HERE, "all_gestures.png")
+os.makedirs(OUTPUT_DIR, exist_ok=True)
+out = os.path.join(OUTPUT_DIR, "all_gestures.png")
 plt.savefig(out, dpi=100)
 print("Saved:", out)

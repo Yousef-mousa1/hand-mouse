@@ -1,9 +1,17 @@
 import os
 
-BASE = os.path.expanduser("~/Documents/data")
-HERE = os.path.dirname(os.path.abspath(__file__))
-MODEL_PATH = os.path.join(HERE, "model.joblib")
-CAMERA_CSV = os.path.join(BASE, "camera.csv")   # samples recorded from your own camera
+# Project root = the folder above src/ (this file lives in src/)
+SRC_DIR = os.path.dirname(os.path.abspath(__file__))
+ROOT_DIR = os.path.dirname(SRC_DIR)
+
+DATA_DIR = os.path.join(ROOT_DIR, "data")
+MODEL_DIR = os.path.join(ROOT_DIR, "models")
+OUTPUT_DIR = os.path.join(ROOT_DIR, "outputs")
+
+os.makedirs(MODEL_DIR, exist_ok=True)
+
+MODEL_PATH = os.path.join(MODEL_DIR, "model.joblib")
+CAMERA_CSV = os.path.join(DATA_DIR, "camera.csv")   # samples recorded from your own camera
 
 # The order defines the numeric labels (0..N-1). Keep no_gesture last.
 # Names must match the annotation file names exactly (e.g. two_up.json).

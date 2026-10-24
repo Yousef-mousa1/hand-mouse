@@ -1,6 +1,8 @@
 """Record samples from your own camera.
-Press a class number (0-5) to start recording, press the same number again or space to stop.
-0 little_finger | 1 one | 2 peace | 3 grabbing | 4 two_up | 5 no_gesture (normal/moving/relaxed hand)
+Run from the project root:  python src/record.py
+Press a class number (0-8) to start recording, press the same number again or space to stop.
+0 little_finger | 1 one | 2 peace | 3 grabbing | 4 two_up
+5 like | 6 dislike | 7 fist | 8 no_gesture (normal/moving/relaxed hand)
 ESC to quit and save. Record 200-300 samples per gesture, from different angles and positions.
 """
 import csv
@@ -57,7 +59,7 @@ finally:
     cap.release()
     cv2.destroyAllWindows()
     if rows:
-        new = not os.path.exists(CAMERA_CSV)
+        os.makedirs(os.path.dirname(CAMERA_CSV), exist_ok=True)
         with open(CAMERA_CSV, "a", newline="") as f:
             csv.writer(f).writerows(rows)
         print(f"Added {len(rows)} rows to {CAMERA_CSV}", counts)

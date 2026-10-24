@@ -1,3 +1,6 @@
+"""Train the gesture classifier and save it to models/model.joblib.
+Run from the project root:  python src/train.py
+"""
 import os
 import time
 
@@ -9,7 +12,7 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
-from common import BASE, CAMERA_CSV, MODEL_PATH, NAMES
+from common import DATA_DIR, CAMERA_CSV, MODEL_PATH, NAMES
 
 
 def load(path):
@@ -17,9 +20,9 @@ def load(path):
     return d[:, :-1], d[:, -1].astype(int)
 
 
-X_train, y_train = load(f"{BASE}/train.csv")
-X_val, y_val = load(f"{BASE}/val.csv")
-X_test, y_test = load(f"{BASE}/test.csv")
+X_train, y_train = load(os.path.join(DATA_DIR, "train.csv"))
+X_val, y_val = load(os.path.join(DATA_DIR, "val.csv"))
+X_test, y_test = load(os.path.join(DATA_DIR, "test.csv"))
 
 # Your own camera samples: added to train, and a random 20% of them go to val
 if os.path.exists(CAMERA_CSV):
@@ -70,5 +73,6 @@ print()
 print(classification_report(y_test, pred, labels=labels,
                             target_names=[NAMES[i] for i in labels], zero_division=0))
 
+os.makedirs(os.path.dirname(MODEL_PATH), exist_ok=True)
 joblib.dump(best_model, MODEL_PATH)
 print("Saved:", MODEL_PATH)
